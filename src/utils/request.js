@@ -6,7 +6,7 @@ const host = 'http://larabbs.test/api/v1/'
 const request = async (url,option = {},showLoading = true) => {
     //显示加载中
     if(showLoading) {
-        wx.showLoading({title:'加载中'})
+        wx.showLoading({title:'内容加载中'})
     }
     //拼接请求地址
     option.url = host + url
