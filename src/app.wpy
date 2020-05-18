@@ -1,24 +1,15 @@
 <style lang="less">
-@import (css) './assets/style/app.wxss';
-.page{
-  background-color: #FFFFFF;
-}
 </style>
 
 <script>
 import wepy from '@wepy/core'
 import eventHub from './common/eventHub'
 import vuex from '@wepy/x'
-import promisify  from '@wepy/use-promisify';
 
 wepy.use(vuex)
-wepy.use(promisify);
 
 wepy.app({
   onLaunch() {
-     wepy.wx.login().then(res => {
-        console.log('login: ',res)
-    })
   },
   methods: {
   }
@@ -28,8 +19,7 @@ wepy.app({
 {
   pages: [
     'pages/index',
-    'pages/user',
-    'pages/auth/login'
+    'pages/user'
   ],
   window: {
     backgroundTextStyle: 'light',
