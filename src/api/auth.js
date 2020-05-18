@@ -5,7 +5,7 @@ export function login(data) {
       method: 'post',
       data: data
     })
-  }
+}
 
 export function refresh(token) {
     return request('authorizations/current', {
@@ -14,7 +14,7 @@ export function refresh(token) {
         'Authorization': 'Bearer ' + token
       }
     })
-  }
+}
 
 export function logout(token) {
     return request('authorizations/current', {
@@ -23,7 +23,7 @@ export function logout(token) {
         'Authorization': 'Bearer ' + token
       }
     })
-  }
+}
 
 export function getCaptcha(phone) {
     return request('captchas', {
@@ -32,4 +32,14 @@ export function getCaptcha(phone) {
         phone: phone
       }
     })
-  }
+}
+
+export function getVerificationCode(key, code) {
+    return request('verificationCodes', {
+      method: 'post',
+      data: {
+        captcha_key: key,
+        captcha_code: code
+      }
+    })
+}
