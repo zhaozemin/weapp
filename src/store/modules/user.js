@@ -2,7 +2,7 @@ import wepy from '@wepy/core'
 import { login ,refresh ,logout,register} from '@/api/auth'
 import * as auth from '@/utils/auth'
 import isEmpty from 'lodash/isEmpty'
-import { getCurrentUser } from '@/api/user'
+import { getCurrentUser ,updateUser} from '@/api/user'
 
 const getDefaultState = () => {
   return {
@@ -63,6 +63,13 @@ const actions = {
 
     await dispatch('login')
   },
+  async updateUser ({ commit }, params = {}) {
+
+    const editResponse = await updateUser(params)
+
+    commit('setUser', editResponse.data)
+    auth.setUser(editResponse.data)
+  },
   
 }
 
@@ -73,8 +80,8 @@ const mutations = {
   },
   setToken(state, tokenPayload) {
     state.accessToken = tokenPayload.access_token
-    // state.accessTokenExpiredAt = new Date().getTime() + tokenPayload.expires_in * 1000
-    state.accessTokenExpiredAt = 0
+    state.accessTokenExpiredAt = new Date().getTime() + tokenPayload.expires_in * 1000
+    // state.accessTokenExpiredAt = 0
   },
   resetState:(state)=>{
     console.log(33333);
