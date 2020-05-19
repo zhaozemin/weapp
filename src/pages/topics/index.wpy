@@ -98,7 +98,7 @@
       </div>
     </div>
 
-    <topic-list :topics="topics" :noMoreData="noMoreData"></topic-list>
+    <topic-list :topics="resourceData" :noMoreData="noMoreData"></topic-list>
 
   </div>
 </div>
@@ -114,8 +114,10 @@
 <script>
   import wepy from '@wepy/core'
   import { getTopics, getCategories } from '@/api/topic'
+  import listRefresh from '@/mixins/list-refresh'
 
   wepy.page({
+    mixins: [ listRefresh ],
     data: {
       // 话题数据
       topics: [],
@@ -139,29 +141,12 @@
       }
     },
     async onLoad() {
-      this.loadTopics()
+      this.loadData()
       this.loadCategories()
-    },
-    async onPullDownRefresh() {
-      await this.loadTopics(true)
-      wx.stopPullDownRefresh()
-    },
-    async onReachBottom () {
-      // 如果没有更多内容，直接返回
-      if (this.noMoreData) {
-        return
-      }
-      this.page += 1
-      await this.loadTopics()
-      
     },
     methods: {
       // 获取话题数据
-      async loadTopics(reset = false) {
-        if (reset) {
-          this.page = 1
-        }
-
+      async fetchData() {
         let params = {
           page: this.page,
           include: 'user,category'
@@ -172,17 +157,8 @@
         }
 
         // 请求话题列表接口
-        const topicsResponse = await getTopics(params)
+        return await getTopics(params)
 
-        // 将数据合并到 this.topics
-        this.topics = reset ? topicsResponse.data.data : this.topics.concat(topicsResponse.data.data)
-
-        const pagination = topicsResponse.data.meta
-
-        // 根据分页设置是否还有更多数据
-        if (pagination.current_page === pagination.last_page) {
-          this.noMoreData = true
-      }
     },
     async loadCategories() {
         // 从缓存中获取分类数据
@@ -206,9 +182,8 @@
         this.page = 1
 
         // 设置 reset 为 true
-        this.loadTopics(true)
+        this.loadData(true)
       }
     }
-
   })
 </script>
