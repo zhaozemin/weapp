@@ -15,3 +15,9 @@ export function getCategories(data) {
       data: data
     })
   }
+
+  export function getUserTopics(userId, data) {
+    return request('users/'+userId+'/topics', {
+      data: data
+    })
+  }
