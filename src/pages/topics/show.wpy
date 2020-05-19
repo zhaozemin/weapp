@@ -156,6 +156,16 @@
       },
       
     },
+    onShareAppMessage () {
+      return {
+        // 标题是话题标题
+        title: this.topic.title,
+        // 路径为话题详情路径
+        path: '/pages/topics/show?id=' + this.topic.id,
+        // 图片为用户头像
+        imageUrl: this.user.avatar,
+      }
+    },
     onLoad(options) {
       this.loadTopic(options.id)
 
