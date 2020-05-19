@@ -39,7 +39,7 @@
           </div>
         </div>
 
-        <a class="weui-cell weui-cell_access" url="/pages/topics/userIndex?id={{ user.id }}">
+        <a class="weui-cell weui-cell_access" url="/pages/topics/user-index?id={{ user.id  }}">
           <div class="weui-cell__bd">
             <div class="weui-cell__bd">Ta 的话题</div>
           </div>

@@ -1,26 +1,4 @@
 <style lang="less">
-  .weui-media-box__info__meta {
-    margin: 0;
-    font-size: 12px;
-  }
-  .topic-info {
-    margin-top: 5px;
-  }
-  .topic-title {
-    white-space: normal;
-    font-size: 14px;
-  }
-  .avatar {
-    padding: 4px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    width: 50px;
-    height: 50px;
-  }
-  .reply-count {
-    background-color: #d8d8d8;
-    float: right;
-  }
   /*分类*/
   .weui-flex {
     align-items: center;
@@ -115,16 +93,11 @@
   import wepy from '@wepy/core'
   import { getTopics, getCategories } from '@/api/topic'
   import listRefresh from '@/mixins/list-refresh'
+  import eventHub from '@/common/eventHub'
 
   wepy.page({
     mixins: [ listRefresh ],
     data: {
-      // 话题数据
-      topics: [],
-      // 当前分页
-      page: 1,
-      // 是否还有更多数据
-      noMoreData: false,
       // 分类数据
       categories: [],
       // 当前的分类
@@ -141,8 +114,14 @@
       }
     },
     async onLoad() {
-      this.loadData()
       this.loadCategories()
+      this.loadData()
+
+      eventHub.$on('topic-deleted', (topic) => {
+        this.page = 1
+        this.noMoreData = false
+        this.loadData(true)
+      })
     },
     methods: {
       // 获取话题数据
@@ -161,6 +140,7 @@
 
     },
     async loadCategories() {
+      console.log(1)
         // 从缓存中获取分类数据
         let categories = wx.getStorageSync('categories')
 

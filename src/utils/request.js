@@ -28,7 +28,7 @@ const request = async (url,option = {},showLoading = true) => {
         })
     }
 
-    if (response.statusCode === 500) {
+    if (response.statusCode >= 500) {
         wx.showModal({
             title: '提示',
             content: '服务器错误，请联系管理员或重试',
