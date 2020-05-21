@@ -145,7 +145,6 @@
 
     },
     async loadCategories() {
-      console.log(1)
         // 从缓存中获取分类数据
         let categories = wx.getStorageSync('categories')
 

@@ -217,13 +217,10 @@
       },
       // 发送短信验证码
       async sendVerificationCode() {
-          console.log('验证码');
         if (!this.captchaValue) {
           this.$set(this.errors, 'captchaValue', ['请输入图片验证码'])
           return false
         }
-        console.log('now',new Date().getTime())
-        console.log('expire',new Date(this.captcha.expiredAt).getTime())
         // 检查验证码是否过期，重置流程
         if (new Date().getTime() > new Date(this.captcha.expiredAt).getTime()) {
           this.$set(this.errors, 'captchaValue', ['请输入图片验证码'])

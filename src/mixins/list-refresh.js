@@ -28,9 +28,7 @@ export default {
     },
     methods: {
       async loadData(reset = false) {
-          console.log(66666)
         const dataResponse = await this.fetchData()
-  
         this.resourceData = reset ? dataResponse.data.data : this.resourceData.concat(dataResponse.data.data)
   
         const pagination = dataResponse.data.meta
